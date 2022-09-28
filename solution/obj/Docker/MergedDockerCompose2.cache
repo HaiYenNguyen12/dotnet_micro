@@ -1,0 +1,35 @@
+name: dockercompose16909967047379001569
+services:
+  customerapi:
+    build:
+      context: D:\service\solution
+      dockerfile: CustomerAPI/Dockerfile
+    container_name: customer-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DB_HOST: customerdb
+      DB_NAME: customer_orm
+      MSSQL_SA_PASSWORD: password@12345#
+    image: customerapi
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+  customerdb:
+    container_name: customer-db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: password@12345#
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "18001"
+      protocol: tcp
+networks:
+  backend:
+    name: dockercompose16909967047379001569_backend
