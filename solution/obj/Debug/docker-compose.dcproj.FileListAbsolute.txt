@@ -48,3 +48,17 @@ D:\service\solution\bin\Debug\MongoDB.Libmongocrypt.dll
 D:\service\solution\bin\Debug\DnsClient.dll
 D:\service\solution\bin\Debug\SharpCompress.dll
 D:\service\solution\bin\Debug\OrderAPI.pdb
+D:\service\solution\bin\Debug\GateWay.deps.json
+D:\service\solution\bin\Debug\GateWay.runtimeconfig.json
+D:\service\solution\bin\Debug\ocelot.json
+D:\service\solution\bin\Debug\GateWay.exe
+D:\service\solution\bin\Debug\GateWay.dll
+D:\service\solution\bin\Debug\Ocelot.dll
+D:\service\solution\bin\Debug\Newtonsoft.Json.dll
+D:\service\solution\bin\Debug\Microsoft.Extensions.DiagnosticAdapter.dll
+D:\service\solution\bin\Debug\FluentValidation.dll
+D:\service\solution\bin\Debug\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\service\solution\bin\Debug\Microsoft.AspNetCore.MiddlewareAnalysis.dll
+D:\service\solution\bin\Debug\Microsoft.AspNetCore.JsonPatch.dll
+D:\service\solution\bin\Debug\Newtonsoft.Json.Bson.dll
+D:\service\solution\bin\Debug\GateWay.pdb

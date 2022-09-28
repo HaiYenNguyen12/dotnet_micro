@@ -79,3 +79,16 @@ services:
      - DB_HOST=orderdb
      - DB_NAME=order_orm
 
+
+  gateway:
+    container_name: api-gateway
+    image: ${DOCKER_REGISTRY-}gateway
+    build:
+      context: .
+      dockerfile: GateWay/Dockerfile
+    ports:
+     - 8001:80
+    networks:
+     - backend
+  
+

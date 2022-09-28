@@ -1,0 +1,108 @@
+name: dockercompose16909967047379001569
+services:
+  customerapi:
+    build:
+      context: D:\service\solution
+      dockerfile: CustomerAPI/Dockerfile
+    container_name: customer-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DB_HOST: customerdb
+      DB_NAME: customer_orm
+      MSSQL_SA_PASSWORD: password@12345#
+    image: customerapi
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+  customerdb:
+    container_name: customer-db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: password@12345#
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "18001"
+      protocol: tcp
+  gateway:
+    build:
+      context: D:\service\solution
+      dockerfile: GateWay/Dockerfile
+    container_name: api-gateway
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: gateway
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    - mode: ingress
+      target: 80
+      published: "8001"
+      protocol: tcp
+  orderapi:
+    build:
+      context: D:\service\solution
+      dockerfile: OrderAPI/Dockerfile
+    container_name: order-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DB_HOST: orderdb
+      DB_NAME: order_orm
+    image: orderapi
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+  orderdb:
+    container_name: order-db
+    image: mongo
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 27017
+      published: "18005"
+      protocol: tcp
+  productapi:
+    build:
+      context: D:\service\solution
+      dockerfile: ProductAPI/Dockerfile
+    container_name: product-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DB_HOST: productdb
+      DB_NAME: product_orm
+      DB_ROOT_PASSWORD: "123456"
+    image: productapi
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+  productdb:
+    container_name: product-db
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+    image: mysql:8.0.29-oracle
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 3306
+      published: "18003"
+      protocol: tcp
+networks:
+  backend:
+    name: dockercompose16909967047379001569_backend

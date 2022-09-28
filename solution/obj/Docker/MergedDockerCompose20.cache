@@ -1,0 +1,314 @@
+name: dockercompose16909967047379001569
+services:
+  customerapi:
+    build:
+      context: D:\service\solution
+      dockerfile: CustomerAPI/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: CustomerAPI
+      target: base
+    container_name: customer-api
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DB_HOST: customerdb
+      DB_NAME: customer_orm
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      MSSQL_SA_PASSWORD: password@12345#
+      NUGET_FALLBACK_PACKAGES: ""
+    image: customerapi:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net6.0/CustomerAPI.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: D:\service\solution\CustomerAPI
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: D:\service\solution
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  customerdb:
+    container_name: customer-db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: password@12345#
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "18001"
+      protocol: tcp
+  gateway:
+    build:
+      context: D:\service\solution
+      dockerfile: GateWay/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: GateWay
+      target: base
+    container_name: GateWay
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: ""
+    image: gateway:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net6.0/GateWay.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: D:\service\solution\GateWay
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: D:\service\solution
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  orderapi:
+    build:
+      context: D:\service\solution
+      dockerfile: OrderAPI/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: OrderAPI
+      target: base
+    container_name: order-api
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DB_HOST: orderdb
+      DB_NAME: order_orm
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: ""
+    image: orderapi:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net6.0/OrderAPI.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: D:\service\solution\OrderAPI
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: D:\service\solution
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  orderdb:
+    container_name: order-db
+    image: mongo
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 27017
+      published: "18005"
+      protocol: tcp
+  productapi:
+    build:
+      context: D:\service\solution
+      dockerfile: ProductAPI/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: ProductAPI
+      target: base
+    container_name: product-api
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DB_HOST: productdb
+      DB_NAME: product_orm
+      DB_ROOT_PASSWORD: "123456"
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: ""
+    image: productapi:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net6.0/ProductAPI.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: D:\service\solution\ProductAPI
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: D:\service\solution
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\DELL\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  productdb:
+    container_name: product-db
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+    image: mysql:8.0.29-oracle
+    networks:
+      backend: null
+    ports:
+    - mode: ingress
+      target: 3306
+      published: "18003"
+      protocol: tcp
+networks:
+  backend:
+    name: dockercompose16909967047379001569_backend
+  default:
+    name: dockercompose16909967047379001569_default
